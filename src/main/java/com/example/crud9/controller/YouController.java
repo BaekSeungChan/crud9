@@ -33,4 +33,16 @@ public class YouController {
         return ResponseEntity.ok(youService.getYouById(id));
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteTouById(@PathVariable(name = "id") long id){
+        youService.deleteTouById(id);
+        return new ResponseEntity<>("deleted", HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<YouDto> updateTwo(@PathVariable(name = "id")long id, @Valid @RequestBody YouDto youDto){
+        YouDto youResponse = youService.updateYou(youDto, id);
+        return new ResponseEntity<>(youResponse, HttpStatus.OK);
+    }
+
 }

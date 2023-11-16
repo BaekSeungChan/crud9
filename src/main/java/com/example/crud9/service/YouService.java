@@ -12,4 +12,8 @@ public interface YouService {
 
     YouDto getYouById(long id);
 
+    void deleteTouById(long id);
+
+    YouDto updateYou(YouDto youDto, long id);
+
 }

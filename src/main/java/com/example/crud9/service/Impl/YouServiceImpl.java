@@ -44,4 +44,22 @@ public class YouServiceImpl implements YouService {
         return modelMapper.map(youData, YouDto.class);
     }
 
+    @Override
+    public void deleteTouById(long id){
+        YouData youData = youRepository.findById(id).orElseThrow(() -> new RuntimeException("No id"));
+        youRepository.delete(youData);
+    }
+
+    @Override
+    public YouDto updateYou(YouDto youDto, long id){
+        YouData youData = youRepository.findById(id).orElseThrow(() -> new RuntimeException("No id"));
+
+        youData.setName(youDto.getName());
+        youData.setPhonenumber(youDto.getPhonenumber());
+
+        YouData saveYou = youRepository.save(youData);
+
+        return modelMapper.map(saveYou, YouDto.class);
+    }
+
 }

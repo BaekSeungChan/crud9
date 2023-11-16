@@ -10,4 +10,8 @@ public interface MyService {
     List<MyDto> getAllMy();
 
     MyDto getMyById(long id);
+
+    void deleteMyById(long id);
+
+    MyDto updateMy(MyDto myDto, long id);
 }

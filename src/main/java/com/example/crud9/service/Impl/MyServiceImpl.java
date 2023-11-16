@@ -1,6 +1,7 @@
 package com.example.crud9.service.Impl;
 
 import com.example.crud9.entity.MyData;
+import com.example.crud9.entity.YouData;
 import com.example.crud9.payload.MyDto;
 import com.example.crud9.repository.MyRepository;
 import com.example.crud9.service.MyService;
@@ -41,4 +42,23 @@ public class MyServiceImpl implements MyService {
 
         return modelMapper.map(myData, MyDto.class);
     }
+
+    @Override
+    public void deleteMyById(long id){
+        MyData myData = myRepository.findById(id).orElseThrow(() -> new RuntimeException("No id"));
+        myRepository.delete(myData);
+    }
+
+    @Override
+    public MyDto updateMy(MyDto myDto, long id){
+        MyData myData = myRepository.findById(id).orElseThrow(() -> new RuntimeException("No id"));
+
+        myData.setName(myDto.getName());
+        myData.setPhonenumber(myDto.getPhonenumber());
+
+        MyData savemy = myRepository.save(myData);
+
+        return modelMapper.map(savemy, MyDto.class);
+    }
+
 }
