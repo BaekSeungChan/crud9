@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class YouServiceImpl implements YouService {
     private YouRepository youRepository;
@@ -25,6 +28,20 @@ public class YouServiceImpl implements YouService {
 
         return modelMapper.map(saveYouData, YouDto.class);
 
+    }
+
+    @Override
+    public List<YouDto> getAllYou(){
+        List<YouData> yous = youRepository.findAll();
+
+        return yous.stream().map((you) -> modelMapper.map(you, YouDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public YouDto getYouById(long id){
+        YouData youData = youRepository.findById(id).orElseThrow(() -> new RuntimeException("No id"));
+
+        return modelMapper.map(youData, YouDto.class);
     }
 
 }

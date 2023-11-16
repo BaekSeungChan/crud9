@@ -7,6 +7,9 @@ import com.example.crud9.service.MyService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class MyServiceImpl implements MyService {
 
@@ -24,5 +27,18 @@ public class MyServiceImpl implements MyService {
         MyData saveMy =myRepository.save(myData);
 
         return  modelMapper.map(saveMy, MyDto.class);
+    }
+
+    @Override
+    public List<MyDto> getAllMy(){
+        List<MyData> myDatas = myRepository.findAll();
+        return myDatas.stream().map((myData)-> modelMapper.map(myData, MyDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public MyDto getMyById(long id){
+        MyData myData = myRepository.findById(id).orElseThrow(() -> new RuntimeException("No id"));
+
+        return modelMapper.map(myData, MyDto.class);
     }
 }
