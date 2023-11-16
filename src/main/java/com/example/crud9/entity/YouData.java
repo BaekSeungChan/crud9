@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -19,4 +21,7 @@ public class YouData {
 
     @JsonProperty("phone_number")
     private Integer phonenumber;
+
+    @OneToMany(mappedBy = "youData", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MyData> myDataList;
 }

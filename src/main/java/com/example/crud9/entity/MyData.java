@@ -18,8 +18,14 @@ public class MyData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
     @JsonProperty("phone_number")
+    @Column(length = 20)
     private Integer phonenumber;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "you_id")
+    private YouData youData;
 }
